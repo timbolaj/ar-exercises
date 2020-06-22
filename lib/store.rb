@@ -10,4 +10,12 @@ class Store < ActiveRecord::Base
       errors.add(:mens_or_womens_apparel, "Must input men's or women's apparel")
     end
   end
+
+  before_destroy :empty?
+  private
+    def empty?
+      unless !Employee.find_by store_id: self.id
+        return false
+      end
+    end
 end
